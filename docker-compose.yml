@@ -32,8 +32,9 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    command: --init-file /data/application/init.sql
     volumes:
-      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+      - ./docker-compose/mysql/init_db.sql:/data/application/init.sql
     networks:
       - sellTech
 
