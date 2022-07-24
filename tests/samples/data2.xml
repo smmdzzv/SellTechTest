@@ -1,0 +1,153 @@
+<?xml version="1.0" standalone="yes"?>
+<!--The only difference with data.xml is record for 2674. Abu Abbas changed to Abu Labas-->
+<sdnList xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <publshInformation>
+        <Publish_Date>07/14/2022</Publish_Date>
+        <Record_Count>10426</Record_Count>
+    </publshInformation>
+    <sdnEntry>
+        <uid>36</uid>
+        <lastName>AEROCARIBBEAN AIRLINES</lastName>
+        <sdnType>Entity</sdnType>
+        <programList>
+            <program>CUBA</program>
+        </programList>
+        <akaList>
+            <aka>
+                <uid>12</uid>
+                <type>a.k.a.</type>
+                <category>strong</category>
+                <lastName>AERO-CARIBBEAN</lastName>
+            </aka>
+        </akaList>
+        <addressList>
+            <address>
+                <uid>25</uid>
+                <city>Havana</city>
+                <country>Cuba</country>
+            </address>
+        </addressList>
+    </sdnEntry>
+    <sdnEntry>
+        <uid>2674</uid>
+        <firstName>Abu</firstName>
+        <lastName>LABAS</lastName>
+        <title>Director of PALESTINE LIBERATION FRONT - ABU ABBAS FACTION</title>
+        <sdnType>Individual</sdnType>
+        <programList>
+            <program>SDGT</program>
+        </programList>
+        <akaList>
+            <aka>
+                <uid>1795</uid>
+                <type>a.k.a.</type>
+                <category>strong</category>
+                <lastName>ZAYDAN</lastName>
+                <firstName>Muhammad</firstName>
+            </aka>
+        </akaList>
+        <dateOfBirthList>
+            <dateOfBirthItem>
+                <uid>1000</uid>
+                <dateOfBirth>10 Dec 1948</dateOfBirth>
+                <mainEntry>true</mainEntry>
+            </dateOfBirthItem>
+        </dateOfBirthList>
+    </sdnEntry>
+    <sdnEntry>
+        <uid>2676</uid>
+        <firstName>Dr. Ayman</firstName>
+        <lastName>AL ZAWAHIRI</lastName>
+        <title>Operational and Military Leader of JIHAD GROUP</title>
+        <sdnType>Individual</sdnType>
+        <programList>
+            <program>SDGT</program>
+        </programList>
+        <idList>
+            <id>
+                <uid>1001</uid>
+                <idType>Passport</idType>
+                <idNumber>19820215</idNumber>
+            </id>
+            <id>
+                <uid>1000</uid>
+                <idType>Passport</idType>
+                <idNumber>1084010</idNumber>
+                <idCountry>Egypt</idCountry>
+            </id>
+        </idList>
+        <akaList>
+            <aka>
+                <uid>4760</uid>
+                <type>a.k.a.</type>
+                <category>strong</category>
+                <lastName>AL-ZAWAHIRI</lastName>
+                <firstName>Ayman</firstName>
+            </aka>
+            <aka>
+                <uid>4761</uid>
+                <type>a.k.a.</type>
+                <category>strong</category>
+                <lastName>SALIM</lastName>
+                <firstName>Ahmad Fuad</firstName>
+            </aka>
+            <aka>
+                <uid>4787</uid>
+                <type>a.k.a.</type>
+                <category>strong</category>
+                <lastName>AL-ZAWAHIRI</lastName>
+                <firstName>Aiman Muhammad Rabi</firstName>
+            </aka>
+        </akaList>
+        <dateOfBirthList>
+            <dateOfBirthItem>
+                <uid>1003</uid>
+                <dateOfBirth>19 Jun 1951</dateOfBirth>
+                <mainEntry>true</mainEntry>
+            </dateOfBirthItem>
+        </dateOfBirthList>
+        <placeOfBirthList>
+            <placeOfBirthItem>
+                <uid>1004</uid>
+                <placeOfBirth>Giza, Egypt</placeOfBirth>
+                <mainEntry>true</mainEntry>
+            </placeOfBirthItem>
+        </placeOfBirthList>
+    </sdnEntry>
+    <sdnEntry>
+        <uid>2679</uid>
+        <firstName>Shaykh Muhammad Husayn</firstName>
+        <lastName>FADLALLAH</lastName>
+        <title>Leading Ideological Figure of HIZBALLAH</title>
+        <sdnType>Individual</sdnType>
+        <programList>
+            <program>SDGT</program>
+        </programList>
+        <idList>
+            <id>
+                <uid>120229</uid>
+                <idType>Additional Sanctions Information -</idType>
+                <idNumber>Subject to Secondary Sanctions Pursuant to the Hizballah Financial Sanctions Regulations</idNumber>
+            </id>
+        </idList>
+        <dateOfBirthList>
+            <dateOfBirthItem>
+                <uid>1007</uid>
+                <dateOfBirth>1938</dateOfBirth>
+                <mainEntry>true</mainEntry>
+            </dateOfBirthItem>
+            <dateOfBirthItem>
+                <uid>3929</uid>
+                <dateOfBirth>1936</dateOfBirth>
+                <mainEntry>false</mainEntry>
+            </dateOfBirthItem>
+        </dateOfBirthList>
+        <placeOfBirthList>
+            <placeOfBirthItem>
+                <uid>1008</uid>
+                <placeOfBirth>Najf Al Ashraf (Najaf), Iraq</placeOfBirth>
+                <mainEntry>true</mainEntry>
+            </placeOfBirthItem>
+        </placeOfBirthList>
+    </sdnEntry>
+</sdnList>
