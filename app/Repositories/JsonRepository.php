@@ -57,12 +57,16 @@ class JsonRepository extends AbstractRepository
 
     public function getAliases(string $name, ?string $type)
     {
-        return DB::table('entities')
-            ->where('data->firstName', $name)
-            ->orWhere('data->lastName', $name)
-            ->orWhereJsonContains('data->akaList->aka->firstName', $name)
-            ->orWhereJsonContains('data->akaList->aka->lastName', $name)
+        $name = strtolower($name);
+
+        $res = DB::table('entities')
+            ->whereRaw("LOWER(data->'$.firstName') = JSON_QUOTE('". $name ."')")
+            ->orWhereRaw("LOWER(data->'$.lastName') = JSON_QUOTE('". $name ."')")
+            ->orWhereRaw("JSON_CONTAINS(LOWER(JSON_EXTRACT(data, '$.akaList[*].firstName')), JSON_QUOTE('" . $name . "'))")
+            ->orWhereRaw("JSON_CONTAINS(LOWER(JSON_EXTRACT(data, '$.akaList[*].lastName')), JSON_QUOTE('" . $name . "'))")
             ->first();
+
+        return $res;
     }
 
 

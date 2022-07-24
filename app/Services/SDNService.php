@@ -48,4 +48,8 @@ class SDNService
 
         $this->repository->sync($entities);
     }
+
+    public function getUserNames(string $name, ?string $type){
+        return $this->repository->getAliases($name, $type);
+    }
 }

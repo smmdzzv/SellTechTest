@@ -51,4 +51,13 @@ class SDNServiceWithJsonRepositoryTest extends TestCase
 
         $this->assertCount(1, DB::table('entities')->get());
     }
+
+    public function test_get_user_names_by_name()
+    {
+        $service = new SDNService(new JsonRepository());
+
+        $service->updateData(base_path() . '/tests/samples/data.xml');
+
+        $res = $service->getUserNames('abu', null);
+    }
 }
