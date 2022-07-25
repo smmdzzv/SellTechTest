@@ -49,11 +49,10 @@ class Controller extends BaseController
     /**
      * Returns current data state: empty, updating, ok
      *
-     * @return void
      */
     public function getState()
     {
-
+        return $this->requestStatusService->status();
     }
 
     /**

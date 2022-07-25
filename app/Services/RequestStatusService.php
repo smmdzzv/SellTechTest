@@ -35,9 +35,38 @@ class RequestStatusService
         }
     }
 
+    /**
+     * Returns current status code
+     *
+     * @return array
+     */
+    public function status(): array
+    {
+        //Check last request state first
+        $record = DB::table('update_request_states')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($record) {
+            if ($record->state === UpdateRequestStateEnum::UPDATING->value)
+                return ['result' => false, 'info' => 'updating'];
+            if ($record->state === UpdateRequestStateEnum::SUCCESS->value)
+                return ['result' => true, 'info' => 'ok'];
+        }
+
+        //Check for any successful request
+        if (DB::table('update_request_states')
+            ->where('state', UpdateRequestStateEnum::SUCCESS->value)
+            ->first())
+            return ['result' => true, 'info' => 'ok'];
+        else
+            return ['result' => false, 'info' => 'empty'];
+
+    }
+
     private function updateRequestStatusInDb(UpdateRequestStateEnum $state): int
     {
-       return DB::table('update_request_states')
+        return DB::table('update_request_states')
             ->orderBy('id', 'desc')
             ->take(1)
             ->update([
