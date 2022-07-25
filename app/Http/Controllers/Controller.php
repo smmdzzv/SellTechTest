@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Enums\UpdateRequestStateEnum;
 use App\Http\Responses\UpdateResponse;
+use App\Services\RequestStatusService;
 use App\Services\SDNService;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
@@ -11,10 +13,13 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     private SDNService $service;
+    private RequestStatusService $requestStatusService;
 
-    public function __construct(SDNService $service)
+    public function __construct(SDNService $service, RequestStatusService $requestStatusService)
     {
         $this->service = $service;
+
+        $this->requestStatusService = $requestStatusService;
     }
 
     /**
@@ -24,9 +29,19 @@ class Controller extends BaseController
     public function update()
     {
         try {
+
+            $this->requestStatusService->apply(UpdateRequestStateEnum::UPDATING);
+
             $this->service->updateData('https://www.treasury.gov/ofac/downloads/sdn.xml');
+
+            $this->requestStatusService->apply(UpdateRequestStateEnum::SUCCESS);
+
             return response()->json(new UpdateResponse(true, "", 200));
+
         } catch (\Exception|\Throwable $e) {
+
+            $this->requestStatusService->apply(UpdateRequestStateEnum::FAILED);
+
             return response()->json(new UpdateResponse(false, "service unavailable", 503), 503);
         }
     }
