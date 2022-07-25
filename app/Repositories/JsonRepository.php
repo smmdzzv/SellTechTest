@@ -7,6 +7,7 @@
 namespace App\Repositories;
 
 use App\Models\Entity;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -58,15 +59,27 @@ class JsonRepository extends AbstractRepository
     public function getAliases(string $name, ?string $type)
     {
         $name = strtolower($name);
+        $type = strtolower($type);
+
+        $jsonNeedleLastName = ['lastname' => $name];
+        $jsonNeedleFirstName = ['firstname' => $name];
+
+        if (in_array($type, ['weak', 'strong'])) {
+            $jsonNeedleLastName['category'] = $type;
+            $jsonNeedleFirstName['category'] = $type;
+        }
 
         $res = DB::table('entities')
-            ->whereRaw("LOWER(data->'$.firstName') = JSON_QUOTE('" . $name . "')")
-            ->orWhereRaw("LOWER(data->'$.lastName') = JSON_QUOTE('" . $name . "')")
-            ->orWhereRaw("JSON_CONTAINS(LOWER(JSON_EXTRACT(data, '$.akaList[*].firstName')), JSON_QUOTE('" . $name . "'))")
-            ->orWhereRaw("JSON_CONTAINS(LOWER(JSON_EXTRACT(data, '$.akaList[*].lastName')), JSON_QUOTE('" . $name . "'))")
-            ->first();
+            ->where(function ($query) use ($name) {
+                $query->whereRaw("LOWER(data->'$.firstName') = JSON_QUOTE('" . $name . "')")
+                    ->orWhereRaw("LOWER(data->'$.lastName') = JSON_QUOTE('" . $name . "')");
+            })
+            ->orWhere(function ($query) use ($jsonNeedleFirstName, $jsonNeedleLastName) {
+                $query->whereRaw("JSON_CONTAINS(LOWER(JSON_EXTRACT(data, '$')), '" . json_encode($jsonNeedleFirstName) . "', '$.akalist')");
+                $query->orWhereRaw("JSON_CONTAINS(LOWER(JSON_EXTRACT(data, '$')), '" . json_encode($jsonNeedleLastName) . "', '$.akalist')");
+            })->first();
 
-        return $res ? Entity::withDbRow($res)->getAliases() : null;
+        return $res ? Entity::withDbRow($res)->getAliases($type) : null;
     }
 
 }

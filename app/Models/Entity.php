@@ -65,24 +65,38 @@ class Entity
      *
      * @return array
      */
-    public function getAliases(): array
+    public function getAliases(?string $type): array
     {
-        $init = [[
-            'uid' => $this->id,
-            'firstName' => $this->data['firstName'],
-            'lastName' => $this->data['lastName'],
-        ]];
+        $aliases = [];
 
-        $aliases = !isset($this->data['akaList']) ? [] : array_map(function ($el) {
+        //add primary name to list in case of strong type
+        if (!$type || $type === 'strong')
+            $aliases[] = [
+                'uid' => $this->id,
+                'firstName' => $this->data['firstName'],
+                'lastName' => $this->data['lastName'],
+            ];
+
+        //filter records from akaList
+        if (isset($this->data['akaList'])) {
+
+            foreach ($this->data['akaList'] as $aka) {
+
+                if (!$type || $aka['category'] === $type)
+                    $aliases[] = $aka;
+
+            }
+
+        }
+
+        //format aliases list
+        return  array_map(function ($el) {
             return [
                 'uid' => $this->id,
                 'firstName' => $el['firstName'],
                 'lastName' => $el['lastName']
             ];
-        }, $this->data['akaList']);
-
-
-        return array_merge($init, $aliases);
+        }, $aliases);
     }
 
     /**
