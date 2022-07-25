@@ -72,7 +72,8 @@ class JsonRepository extends AbstractRepository
         $res = DB::table('entities')
             ->where(function ($query) use ($name) {
                 $query->whereRaw("LOWER(data->'$.firstName') = JSON_QUOTE('" . $name . "')")
-                    ->orWhereRaw("LOWER(data->'$.lastName') = JSON_QUOTE('" . $name . "')");
+                    ->orWhereRaw("LOWER(data->'$.lastName') = JSON_QUOTE('" . $name . "')")
+                    ->orWhereRaw("LOWER(CONCAT_WS(' ', JSON_UNQUOTE(JSON_EXTRACT(data, '$.firstName')), JSON_UNQUOTE(JSON_EXTRACT(data, '$.lastName'))))='" . $name . "'");
             })
             ->orWhere(function ($query) use ($jsonNeedleFirstName, $jsonNeedleLastName) {
                 $query->whereRaw("JSON_CONTAINS(LOWER(JSON_EXTRACT(data, '$')), '" . json_encode($jsonNeedleFirstName) . "', '$.akalist')");

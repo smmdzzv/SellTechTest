@@ -83,6 +83,37 @@ class SDNServiceWithJsonRepositoryTest extends TestCase
         $this->assertEquals($expected, $res);
     }
 
+    public function test_get_user_names_by_full_name()
+    {
+        $service = new SDNService(new JsonRepository());
+
+        $service->updateData(base_path() . '/tests/samples/data.xml');
+
+        $res = $service->getUserNames('dr. ayman al zawahiri', null);
+
+        $expected = [
+            [
+                "uid" => 2676,
+                "firstName" => "Dr. Ayman",
+                "lastName" => "AL ZAWAHIRI"
+            ], [
+                "uid" => 2676,
+                "firstName" => "Ayman",
+                "lastName" => "AL-ZAWAHIRI"
+            ], [
+                "uid" => 2676,
+                "firstName" => "Ahmad Fuad",
+                "lastName" => "SALIM"
+            ], [
+                "uid" => 2676,
+                "firstName" => "Aiman Muhammad Rabi",
+                "lastName" => "AL-ZAWAHIRI"
+            ]
+        ];
+
+        $this->assertEquals($expected, $res);
+    }
+
     public function test_get_user_names_by_aka()
     {
         $service = new SDNService(new JsonRepository());
