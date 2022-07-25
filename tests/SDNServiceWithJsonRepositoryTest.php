@@ -190,4 +190,15 @@ class SDNServiceWithJsonRepositoryTest extends TestCase
 
         $this->assertEquals($expected, $res);
     }
+
+    public function test_get_user_names_with_not_existing_name()
+    {
+        $service = new SDNService(new JsonRepository());
+
+        $service->updateData(base_path() . '/tests/samples/data.xml');
+
+        $res = $service->getUserNames('Elizabeth', "wEak");
+
+        $this->assertEquals([], $res);
+    }
 }

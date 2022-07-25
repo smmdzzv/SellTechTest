@@ -80,7 +80,7 @@ class JsonRepository extends AbstractRepository
                 $query->orWhereRaw("JSON_CONTAINS(LOWER(JSON_EXTRACT(data, '$')), '" . json_encode($jsonNeedleLastName) . "', '$.akalist')");
             })->first();
 
-        return $res ? Entity::withDbRow($res)->getAliases($type) : null;
+        return $res ? Entity::withDbRow($res)->getAliases($type) : [];
     }
 
 }
