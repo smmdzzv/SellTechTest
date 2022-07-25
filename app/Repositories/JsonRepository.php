@@ -60,14 +60,13 @@ class JsonRepository extends AbstractRepository
         $name = strtolower($name);
 
         $res = DB::table('entities')
-            ->whereRaw("LOWER(data->'$.firstName') = JSON_QUOTE('". $name ."')")
-            ->orWhereRaw("LOWER(data->'$.lastName') = JSON_QUOTE('". $name ."')")
+            ->whereRaw("LOWER(data->'$.firstName') = JSON_QUOTE('" . $name . "')")
+            ->orWhereRaw("LOWER(data->'$.lastName') = JSON_QUOTE('" . $name . "')")
             ->orWhereRaw("JSON_CONTAINS(LOWER(JSON_EXTRACT(data, '$.akaList[*].firstName')), JSON_QUOTE('" . $name . "'))")
             ->orWhereRaw("JSON_CONTAINS(LOWER(JSON_EXTRACT(data, '$.akaList[*].lastName')), JSON_QUOTE('" . $name . "'))")
             ->first();
 
-        return $res;
+        return $res ? Entity::withDbRow($res)->getAliases() : null;
     }
-
 
 }

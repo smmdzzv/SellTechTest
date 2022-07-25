@@ -39,7 +39,7 @@ class SDNService
 
             if ((string)$entry->sdnType === 'Individual'){
                 $entities->push(
-                    new Entity((json_decode(json_encode($entry), 1)))
+                    Entity::withFetchedData((json_decode(json_encode($entry), 1)))
                 );
             }
 

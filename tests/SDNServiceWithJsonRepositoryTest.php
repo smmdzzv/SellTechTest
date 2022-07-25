@@ -58,6 +58,59 @@ class SDNServiceWithJsonRepositoryTest extends TestCase
 
         $service->updateData(base_path() . '/tests/samples/data.xml');
 
-        $res = $service->getUserNames('abu', null);
+        $res = $service->getUserNames('dr. ayman', null);
+
+        $expected = [
+            [
+                "uid" => "2676",
+                "firstName" => "Dr. Ayman",
+                "lastName" => "AL ZAWAHIRI"
+            ], [
+                "uid" => "2676",
+                "firstName" => "Ayman",
+                "lastName" => "AL-ZAWAHIRI"
+            ], [
+                "uid" => "2676",
+                "firstName" => "Ahmad Fuad",
+                "lastName" => "SALIM"
+            ], [
+                "uid" => "2676",
+                "firstName" => "Aiman Muhammad Rabi",
+                "lastName" => "AL-ZAWAHIRI"
+            ]
+        ];
+
+        $this->assertEquals($expected, $res);
+    }
+
+    public function test_get_user_names_by_aka()
+    {
+        $service = new SDNService(new JsonRepository());
+
+        $service->updateData(base_path() . '/tests/samples/data.xml');
+
+        $res = $service->getUserNames('salim', null);
+
+        $expected = [
+            [
+                "uid" => "2676",
+                "firstName" => "Dr. Ayman",
+                "lastName" => "AL ZAWAHIRI"
+            ], [
+                "uid" => "2676",
+                "firstName" => "Ayman",
+                "lastName" => "AL-ZAWAHIRI"
+            ], [
+                "uid" => "2676",
+                "firstName" => "Ahmad Fuad",
+                "lastName" => "SALIM"
+            ], [
+                "uid" => "2676",
+                "firstName" => "Aiman Muhammad Rabi",
+                "lastName" => "AL-ZAWAHIRI"
+            ]
+        ];
+
+        $this->assertEquals($expected, $res);
     }
 }

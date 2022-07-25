@@ -14,9 +14,17 @@ class Entity
 
     public array $data;
 
-    public function __construct(array $data)
+    /**
+     * Returns new entity, which is constructed with API data
+     *
+     * @param $data
+     * @return Entity
+     */
+    public static function withFetchedData($data): Entity
     {
-        $this->id = $data['uid'];
+        $entity = new self();
+
+        $entity->id = $data['uid'];
 
         if (isset($data['akaList']))
             if (isset($data['akaList']['aka']['uid'])) {
@@ -25,11 +33,63 @@ class Entity
 
             } else $data['akaList'] = array_values(($data['akaList']['aka']));
 
-        $this->hash = hash('sha256', serialize($data));
+        $entity->hash = hash('sha256', serialize($data));
 
-        $this->data = $data;
+        $entity->data = $data;
+
+        return $entity;
     }
 
+
+    /**
+     * Returns new entity, which is constructed with database data
+     *
+     * @param $data
+     * @return Entity
+     */
+    public static function withDbRow($data): Entity
+    {
+        $entity = new self();
+
+        $entity->id = $data->id;
+
+        $entity->hash = $data->hash;
+
+        $entity->data = json_decode($data->data, 1);
+
+        return $entity;
+    }
+
+    /**
+     * Returns all names with uid
+     *
+     * @return array
+     */
+    public function getAliases(): array
+    {
+        $init = [[
+            'uid' => $this->id,
+            'firstName' => $this->data['firstName'],
+            'lastName' => $this->data['lastName'],
+        ]];
+
+        $aliases = !isset($this->data['akaList']) ? [] : array_map(function ($el) {
+            return [
+                'uid' => $this->id,
+                'firstName' => $el['firstName'],
+                'lastName' => $el['lastName']
+            ];
+        }, $this->data['akaList']);
+
+
+        return array_merge($init, $aliases);
+    }
+
+    /**
+     * Return array from
+     *
+     * @return array
+     */
     public function toArray(): array
     {
         return [
